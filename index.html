@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>FlowTrack</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0a0a0a;
+            font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            padding: 24px;
+            color: #ededed;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Сетка на весь фон (включая середину, без затемнения) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glass-panel {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: transparent;
+            backdrop-filter: none;
+            border-radius: 56px;
+            border: none;
+            padding: 40px 32px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .glow-text {
+            font-size: clamp(48px, 12vw, 110px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(120deg, #ffffff 20%, #b0b0b0 50%, #ffffff 80%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+            animation: auraPulse 3.2s infinite alternate ease-in-out;
+            will-change: text-shadow;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        @keyframes auraPulse {
+            0% {
+                text-shadow: 0 0 3px rgba(255,255,255,0.15);
+            }
+            100% {
+                text-shadow: 0 0 22px rgba(255,255,255,0.4);
+            }
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-bottom: 56px;
+            flex-wrap: wrap;
+        }
+
+        /* Обводка на кнопки Игры / Программы */
+        .tab {
+            background: transparent;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            color: #ddd;
+            font-size: 1.3rem;
+            font-weight: 500;
+            padding: 12px 38px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            backdrop-filter: blur(4px);
+            letter-spacing: 1px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .tab.active {
+            border-color: white;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            box-shadow: 0 0 12px rgba(255,255,255,0.1);
+        }
+
+        .tab:hover {
+            border-color: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .content-pane {
+            display: none;
+            animation: fadeSlide 0.3s ease;
+            flex: 1;
+        }
+
+        .content-pane.active {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(6px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+            flex: 1;
+        }
+
+        .file-card {
+            background: rgba(18,18,18,0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 32px;
+            padding: 28px 22px;
+            transition: 0.2s;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .file-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,0.25);
+            background: rgba(30,30,30,0.95);
+        }
+
+        .file-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #f0f0f0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .file-card p {
+            color: #a0a0a0;
+            font-size: 14px;
+            margin-bottom: 24px;
+            font-family: 'Segoe UI', system-ui;
+        }
+
+        .download-link {
+            display: inline-block;
+            background: rgba(40,40,50,0.8);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 28px;
+            border-radius: 32px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .download-link:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        .footer {
+            margin-top: 56px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #5a5a5a;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 28px;
+            letter-spacing: 0.5px;
+            font-family: 'Segoe UI', system-ui;
+        }
+
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        @media (max-width: 750px) {
+            body { padding: 16px; }
+            .glass-panel { padding: 24px 20px; }
+            .tab { padding: 8px 22px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="glass-panel">
+    <div class="title">
+        <span class="glow-text">FlowTrack</span>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active" data-tab="games">Игры</div>
+        <div class="tab" data-tab="software">Программы</div>
+    </div>
+
+    <!-- Игры -->
+    <div id="gamesContainer" class="content-pane active">
+        <div class="empty-state">Пусто</div>
+        <div class="grid" id="gamesGrid"></div>
+    </div>
+
+    <!-- Программы -->
+    <div id="softwareContainer" class="content-pane">
+        <div class="empty-state">Тут пока что пусто</div>
+        <div class="grid" id="softwareGrid"></div>
+    </div>
+
+    <div class="footer">
+        FlowTrack — Платформа установки игр и програм
+    </div>
+</div>
+
+<script>
+    (function() {
+        const tabs = document.querySelectorAll('.tab');
+        const panes = {
+            games: document.getElementById('gamesContainer'),
+            software: document.getElementById('softwareContainer')
+        };
+
+        function activateTab(tabId) {
+            Object.values(panes).forEach(pane => pane.classList.remove('active'));
+            if (panes[tabId]) panes[tabId].classList.add('active');
+
+            tabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabId) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                if (tabId) activateTab(tabId);
+            });
+        });
+
+        const gamesGrid = document.getElementById('gamesGrid');
+        const softwareGrid = document.getElementById('softwareGrid');
+
+        function showEmptyIfNeeded() {
+            const gamesEmpty = document.querySelector('#gamesContainer .empty-state');
+            const softwareEmpty = document.querySelector('#softwareContainer .empty-state');
+            
+            if (gamesGrid.children.length === 0 && gamesEmpty) gamesEmpty.style.display = 'block';
+            else if (gamesEmpty) gamesEmpty.style.display = 'none';
+            
+            if (softwareGrid.children.length === 0 && softwareEmpty) softwareEmpty.style.display = 'block';
+            else if (softwareEmpty) softwareEmpty.style.display = 'none';
+        }
+
+        window.addCard = function(section, title, description, downloadUrl) {
+            const card = document.createElement('div');
+            card.className = 'file-card';
+            card.innerHTML = `
+                <h3>${escapeHtml(title)}</h3>
+                <p>${escapeHtml(description)}</p>
+                <a href="${downloadUrl}" class="download-link" target="_blank" rel="noopener noreferrer">Скачать</a>
+            `;
+            
+            if (section === 'games') {
+                gamesGrid.appendChild(card);
+            } else if (section === 'software') {
+                softwareGrid.appendChild(card);
+            }
+            showEmptyIfNeeded();
+        };
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        addCard('games', 'Brawl v11', 'Приватка бравл старс', 'https://drive.google.com/file/d/1HcWbJ2qYZ_z_H2k4QQ020Nsfqryi6fd1/view?usp=sharing');
+        addCard('games', 'Polis-Brawl', 'Приватка бравл старс', 'https://drive.google.com/file/d/1llDDRUsu7j0Qgh0EsBe29OaLh5OXHpg-/view?usp=sharing');
+        addCard('games', 'WinStorm', 'Казино', 'https://drive.google.com/file/d/1iZtnt_BKT6EkvoFZ5erw--MhMvCNgzYl/view?usp=sharing');
+        
+        showEmptyIfNeeded();
+    })();
+</script>
+
+</body>
+</html>

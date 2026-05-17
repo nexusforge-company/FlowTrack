@@ -9,11 +9,16 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         body {
             min-height: 100vh;
-            background: #02010a;
+            background: #0a0a0a;
             font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
             padding: 24px;
             color: #ededed;
@@ -21,6 +26,7 @@
             flex-direction: column;
             position: relative;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         body::before {
@@ -31,38 +37,43 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 25% 55%, rgba(255,255,255,0.6), transparent),
-                radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,0.9), transparent),
-                radial-gradient(1px 1px at 55% 70%, rgba(255,255,255,0.7), transparent),
-                radial-gradient(1.5px 1.5px at 70% 30%, rgba(255,255,255,0.85), transparent),
-                radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.6), transparent),
-                radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.75), transparent),
-                radial-gradient(1.5px 1.5px at 60% 90%, rgba(255,255,255,0.65), transparent),
-                radial-gradient(1px 1px at 90% 15%, rgba(255,255,255,0.55), transparent),
-                radial-gradient(1px 1px at 35% 40%, rgba(255,255,255,0.5), transparent),
-                radial-gradient(1px 1px at 75% 50%, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1.2px 1.2px at 50% 50%, rgba(255,255,255,0.7), transparent),
-                radial-gradient(1px 1px at 20% 65%, rgba(255,255,255,0.6), transparent),
-                radial-gradient(1.3px 1.3px at 80% 85%, rgba(255,255,255,0.75), transparent),
-                radial-gradient(1px 1px at 45% 25%, rgba(255,255,255,0.65), transparent);
-            background-size: 300px 300px;
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
-            animation: twinkle 3s infinite alternate ease-in-out;
+            will-change: auto;
         }
 
-        @keyframes twinkle {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 25% 55%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 55% 70%, rgba(255,255,255,0.35), transparent),
+                radial-gradient(1.5px 1.5px at 70% 30%, rgba(255,255,255,0.45), transparent),
+                radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1.5px 1.5px at 60% 90%, rgba(255,255,255,0.35), transparent),
+                radial-gradient(1px 1px at 90% 15%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1px 1px at 35% 40%, rgba(255,255,255,0.25), transparent),
+                radial-gradient(1px 1px at 75% 50%, rgba(255,255,255,0.4), transparent);
+            background-size: 200px 200px;
+            pointer-events: none;
+            z-index: 0;
+            will-change: auto;
         }
 
         .glass-panel {
             max-width: 1100px;
             margin: 0 auto;
             background: transparent;
-            backdrop-filter: none;
             border-radius: 56px;
             border: none;
             padding: 40px 32px;
@@ -82,27 +93,14 @@
             font-size: clamp(42px, 9vw, 90px);
             font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #a0f0ff 0%, #c084fc 40%, #67e8f9 70%, #a78bfa 100%);
+            background: linear-gradient(135deg, #a0a0a0 0%, #d0d0d0 40%, #f0f0f0 70%, #b0b0b0 100%);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             display: inline-block;
-            animation: neonGlow 3s infinite alternate ease-in-out;
-            will-change: filter;
             font-family: 'Poppins', 'Segoe UI', sans-serif;
-            filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
-        }
-
-        @keyframes neonGlow {
-            0% {
-                filter: drop-shadow(0 0 15px rgba(100, 200, 255, 0.4)) drop-shadow(0 0 30px rgba(139, 92, 246, 0.3));
-            }
-            50% {
-                filter: drop-shadow(0 0 25px rgba(100, 200, 255, 0.6)) drop-shadow(0 0 40px rgba(139, 92, 246, 0.5));
-            }
-            100% {
-                filter: drop-shadow(0 0 18px rgba(100, 200, 255, 0.5)) drop-shadow(0 0 35px rgba(139, 92, 246, 0.4));
-            }
+            text-shadow: 0 0 20px rgba(200, 200, 200, 0.3);
+            will-change: auto;
         }
 
         .tabs {
@@ -114,55 +112,40 @@
         }
 
         .tab {
-            background: rgba(20, 20, 40, 0.5);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1.5px solid rgba(139, 92, 246, 0.3);
-            color: #c0c0d0;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1.5px solid rgba(180, 180, 180, 0.3);
+            color: #b0b0b0;
             font-size: 1rem;
             font-weight: 500;
             padding: 10px 30px;
             border-radius: 60px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
             letter-spacing: 1px;
             font-family: 'Poppins', sans-serif;
             position: relative;
             overflow: hidden;
+            will-change: transform;
         }
 
-        .tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .tab:hover::before {
-            left: 100%;
+        .tab:active {
+            transform: scale(0.96);
         }
 
         .tab.active {
-            border-color: #a78bfa;
-            background: rgba(139, 92, 246, 0.15);
+            border-color: #c0c0c0;
+            background: rgba(180, 180, 180, 0.2);
             color: #ffffff;
-            box-shadow: 0 0 25px rgba(139, 92, 246, 0.4), 0 0 50px rgba(6, 182, 212, 0.2);
+            box-shadow: 0 0 20px rgba(200, 200, 200, 0.2);
         }
 
         .tab:hover {
-            border-color: rgba(139, 92, 246, 0.7);
-            background: rgba(139, 92, 246, 0.1);
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
-            transform: translateY(-2px);
+            border-color: rgba(200, 200, 200, 0.6);
+            background: rgba(180, 180, 180, 0.15);
         }
 
         .content-pane {
             display: none;
-            animation: fadeSlideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             flex: 1;
         }
 
@@ -170,19 +153,12 @@
             display: flex;
             flex-direction: column;
             flex: 1;
+            animation: fadeIn 0.2s ease;
         }
 
-        @keyframes fadeSlideUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(10px);
-                filter: blur(3px);
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0);
-                filter: blur(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .grid {
@@ -194,36 +170,32 @@
         }
 
         .file-card {
-            background: rgba(15, 15, 30, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(20, 20, 20, 0.8);
             border-radius: 16px;
             padding: 16px 14px;
             text-align: center;
-            border: 1.5px solid rgba(139, 92, 246, 0.2);
+            border: 1.5px solid rgba(180, 180, 180, 0.2);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            cursor: default;
         }
 
         .file-card h3 {
             font-size: 17px;
             font-weight: 600;
             margin-bottom: 6px;
-            color: #e8e8ff;
+            color: #d0d0d0;
             font-family: 'Poppins', sans-serif;
             letter-spacing: 0.3px;
-            text-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
         }
 
         .file-card p {
-            color: #9090b0;
+            color: #808080;
             font-size: 12px;
             margin-bottom: 14px;
             font-family: 'Segoe UI', system-ui;
@@ -232,31 +204,32 @@
 
         .download-link {
             display: inline-block;
-            background: rgba(139, 92, 246, 0.12);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1.5px solid rgba(139, 92, 246, 0.35);
-            color: #c4b5fd;
+            background: rgba(150, 150, 150, 0.12);
+            border: 1.5px solid rgba(180, 180, 180, 0.35);
+            color: #c0c0c0;
             padding: 7px 22px;
             border-radius: 24px;
             text-decoration: none;
             font-weight: 500;
             font-size: 0.8rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
             font-family: 'Poppins', sans-serif;
             letter-spacing: 0.3px;
             cursor: pointer;
+            will-change: transform;
+        }
+
+        .download-link:active {
+            transform: scale(0.95);
         }
 
         .download-link:hover {
-            background: rgba(139, 92, 246, 0.22);
-            border-color: rgba(139, 92, 246, 0.65);
+            background: rgba(180, 180, 180, 0.2);
+            border-color: rgba(200, 200, 200, 0.6);
             color: #ffffff;
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.35);
-            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(200, 200, 200, 0.2);
         }
 
-        /* Иконка Telegram */
         .telegram-fab {
             position: fixed;
             bottom: 28px;
@@ -264,49 +237,42 @@
             width: 52px;
             height: 52px;
             border-radius: 50%;
-            background: rgba(20, 20, 40, 0.6);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1.5px solid rgba(139, 92, 246, 0.4);
+            background: rgba(20, 20, 20, 0.8);
+            border: 1.5px solid rgba(180, 180, 180, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
             z-index: 999;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(139, 92, 246, 0.2);
-            animation: float 3s infinite ease-in-out;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            will-change: transform;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .telegram-fab svg {
             width: 26px;
             height: 26px;
-            fill: #ffffff;
-            transition: transform 0.3s;
+            fill: #cccccc;
+            pointer-events: none;
+        }
+
+        .telegram-fab:active {
+            transform: scale(0.9);
         }
 
         .telegram-fab:hover {
-            border-color: #a78bfa;
-            background: rgba(139, 92, 246, 0.2);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 30px rgba(139, 92, 246, 0.5);
-            transform: scale(1.1);
-        }
-
-        .telegram-fab:hover svg {
-            transform: rotate(-10deg) scale(1.1);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            border-color: #cccccc;
+            background: rgba(200, 200, 200, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(200, 200, 200, 0.25);
         }
 
         .footer {
             margin-top: 40px;
             text-align: center;
             font-size: 0.7rem;
-            color: #5a5a7a;
-            border-top: 1px solid rgba(139, 92, 246, 0.1);
+            color: #606060;
+            border-top: 1px solid rgba(180, 180, 180, 0.08);
             padding-top: 20px;
             letter-spacing: 0.5px;
             font-family: 'Segoe UI', system-ui;
@@ -316,7 +282,7 @@
             display: none;
             text-align: center;
             padding: 40px;
-            color: #5a5a7a;
+            color: #606060;
             font-size: 0.95rem;
         }
 
@@ -358,7 +324,6 @@
     </div>
 </div>
 
-<!-- Кнопка Telegram с SVG иконкой -->
 <a href="https://t.me/brawlstarsTutorial1" target="_blank" rel="noopener noreferrer" class="telegram-fab" title="Наш Telegram канал">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.46-1.901-.903-1.056-.692-1.653-1.123-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.01-1.252-.242-1.865-.44-.752-.245-1.349-.374-1.297-.79.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.1-.002.32.023.463.14.12.1.153.235.17.33.015.095.035.31.02.48z"/>
@@ -387,8 +352,9 @@
         }
 
         tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.getAttribute('data-tab');
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabId = this.getAttribute('data-tab');
                 if (tabId) activateTab(tabId);
             });
         });
